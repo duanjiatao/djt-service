@@ -78,13 +78,14 @@
                 <configuration>
                     <classesDirectory>target/classes/</classesDirectory>
                     <archive>
+                        <addMavenDescriptor>true</addMavenDescriptor>
                         <manifest>
                             <useUniqueVersions>false</useUniqueVersions>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>./</classpathPrefix>
                         </manifest>
                         <manifestEntries>
-                            <Class-Path>.</Class-Path>
+                            <Class-Path>../config/</Class-Path>
                         </manifestEntries>
                     </archive>
                     <excludes>
