@@ -78,7 +78,6 @@ status() {
 #重启
 restart() {
   stop
-  sleep 1s
   start
 }
 
