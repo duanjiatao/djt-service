@@ -22,7 +22,7 @@
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
         <!-- 一般日志文件格式 输出INFO及以上级别的日志 -->
-        <RollingRandomAccessFile name="Info"
+        <RollingRandomAccessFile name="InfoFile"
                                  fileName="${LOG_HOME}/${FILE_NAME}.log"
                                  filePattern="${LOG_HOME}/${FILE_NAME}_%d{yyyy-MM-dd}.log.gz">
             <Filters>
@@ -35,7 +35,7 @@
             <DefaultRolloverStrategy max="20"/>
         </RollingRandomAccessFile>
         <!-- 错误日志文件格式 输出WARN及以上级别的日志 -->
-        <RollingRandomAccessFile name="Error"
+        <RollingRandomAccessFile name="ErrorFile"
                                  fileName="${LOG_HOME}/${FILE_NAME}_ERROR.log"
                                  filePattern="${LOG_HOME}/${FILE_NAME}_ERROR_%d{yyyy-MM-dd}.log.gz">
             <Filters>
@@ -49,7 +49,7 @@
         </RollingRandomAccessFile>
         <!-- 配置异步写日志 -->
         <Async name="Async">
-            <AppenderRef ref="Info"/>
+            <AppenderRef ref="InfoFile"/>
         </Async>
     </Appenders>
 
@@ -58,8 +58,8 @@
         <!-- 配置日志的根节点 -->
         <root level="INFO">
             <appender-ref ref="Console"/>
-            <appender-ref ref="Info"/>
-            <appender-ref ref="Error"/>
+            <appender-ref ref="InfoFile"/>
+            <appender-ref ref="ErrorFile"/>
         </root>
         <!-- 第三方日志系统 -->
         <logger level="info" name="org.springframework"/>
