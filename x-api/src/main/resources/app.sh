@@ -3,8 +3,9 @@
 SCRIPT=$0
 DEPLOY_DIR=$(pwd)
 CONF_DIR=$DEPLOY_DIR/config
-JAR_NAME=${artifactId}-${version}.${packaging}
-LOCATION=$DEPLOY_DIR/lib/${JAR_NAME}
+SERVICE=${service.name}
+JAR=${artifactId}-${version}.${packaging}
+LOCATION=$DEPLOY_DIR/lib/$JAR
 
 JAVA_OPTS="-server -Xms512m -Xmx1g -Xmn256m -verbose:gc -Xloggc:$DEPLOY_DIR/gc.log"
 JAVA_OPTS="$JAVA_OPTS  -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=70 -XX:+CMSParallelRemarkEnabled -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+CMSClassUnloadingEnabled -XX:SurvivorRatio=8 -XX:+DisableExplicitGC  -XX:+PrintGCDetails -XX:-OmitStackTraceInFastThrow"
@@ -20,7 +21,7 @@ usage() {
 
 #检查程序是否在运行
 is_exist() {
-  PID=$(ps -ef | grep $JAR_NAME | grep -v grep | awk '{print $2}')
+  PID=$(ps -ef | grep $SERVICE | grep -v grep | awk '{print $2}')
   #如果不存在返回1，存在返回0
   if [ -z "${PID}" ]; then
     return 1
@@ -33,12 +34,12 @@ is_exist() {
 start() {
   is_exist
   if [ $? -eq "0" ]; then
-    echo "Application $JAR_NAME is already running. PID=$PID"
+    echo "Application $SERVICE is already running PID=$PID"
   else
-    echo "Starting application..."
-    nohup java $JAVA_OPTS $CONF_LOG -jar $LOCATION $CONF_APP >/dev/null 2>&1 &
+    echo "Starting application $SERVICE..."
+    nohup java $JAVA_OPTS $CONF_LOG -jar $LOCATION $CONF_APP $SERVICE >/dev/null 2>&1 &
     PID=$(echo $!)
-    echo "Application $JAR_NAME start success. PID=$PID"
+    echo "Application $SERVICE start success PID=$PID"
   fi
 }
 
@@ -47,19 +48,20 @@ stop() {
   is_exist
   if [ $? -eq "0" ]; then
     kill -15 $PID
-    echo "Application $JAR_NAME process stop. PID=$PID"
+    local PID_TMP=$PID
+    echo "Stopping application $SERVICE..."
     sleep 3s
   else
-    echo "Application $JAR_NAME is not running."
+    echo "Application $SERVICE is not running."
     return 0
   fi
 
   is_exist
   if [ $? -eq "0" ]; then
     kill -9 $PID
-    echo "Application $JAR_NAME process is killed. PID=$PID"
+    echo "Application $SERVICE is killed PID=$PID"
   else
-    echo "Application $JAR_NAME process stop success."
+    echo "Application $SERVICE stop success PID=$PID_TMP"
   fi
 }
 
@@ -67,9 +69,9 @@ stop() {
 status() {
   is_exist
   if [ $? -eq "0" ]; then
-    echo "Application $JAR_NAME is running. PID=$PID"
+    echo "Application $SERVICE is running PID=$PID"
   else
-    echo "Application $JAR_NAME is not running."
+    echo "Application $SERVICE is not running."
   fi
 }
 

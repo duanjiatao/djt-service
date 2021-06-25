@@ -12,7 +12,7 @@
             <!-->是否添加自身jar包<-->
             <useProjectArtifact>true</useProjectArtifact>
             <!--三方包输出路径-->
-            <outputDirectory>./${artifactId}/lib</outputDirectory>
+            <outputDirectory>./${service.name}/lib</outputDirectory>
             <!--是否将三方包解压成class文件-->
             <unpack>false</unpack>
         </dependencySet>
@@ -23,7 +23,7 @@
 
         <fileSet>
             <directory>${project.build.directory}/classes</directory>
-            <outputDirectory>./${artifactId}/config</outputDirectory>
+            <outputDirectory>./${service.name}/config</outputDirectory>
             <includes>
                 <include>log4j2.xml</include>
                 <include>*.properties</include>
@@ -32,7 +32,7 @@
 
         <fileSet>
             <directory>${project.build.directory}/classes</directory>
-            <outputDirectory>./${artifactId}/</outputDirectory>
+            <outputDirectory>./${service.name}/</outputDirectory>
             <includes>
                 <include>*.sh</include>
             </includes>
