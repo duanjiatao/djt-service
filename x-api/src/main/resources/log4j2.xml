@@ -8,7 +8,7 @@
     <Properties>
         <!-- 配置日志文件输出目录及文件名 -->
         <Property name="LOG_HOME">./logs</Property>
-        <Property name="FILE_NAME">${name}</Property>
+        <Property name="FILE_NAME">${service.name}</Property>
         <property name="LOG_PATTERN">[%d{yyyy-MM-dd HH:mm:ss.SSS}] %processId %-5p [%c{36}:%L] [%t] - %msg%xEx%n
         </property>
     </Properties>
