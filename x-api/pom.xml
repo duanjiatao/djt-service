@@ -34,6 +34,30 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <!--全量包 默认-->
+            <id>all</id>
+            <properties>
+                <skipPkg>false</skipPkg>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+            </build>
+        </profile>
+        <profile>
+            <!--单个包-->
+            <id>one</id>
+            <properties>
+                <skipPkg>true</skipPkg>
+            </properties>
+            <build>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
 
         <resources>
@@ -52,11 +76,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <!--启动类-->
                     <mainClass>com.djt.api.Application</mainClass>
                     <layout>JAR</layout>
                     <layers>
                         <enabled>false</enabled>
                     </layers>
+                    <!--jar包中添加的第三方jar 此处为了剔除三方jar 使用nothing-->
                     <includes>
                         <include>
                             <groupId>nothing</groupId>
@@ -76,6 +102,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.2</version>
                 <configuration>
                     <!--<finalName>${artifactId}-${version}</finalName>-->
                     <classesDirectory>target/classes/</classesDirectory>
@@ -87,6 +114,7 @@
                             <classpathPrefix>./</classpathPrefix>
                         </manifest>
                         <manifestEntries>
+                            <!--配置文件目录-->
                             <Class-Path>../config/</Class-Path>
                         </manifestEntries>
                     </archive>
@@ -99,7 +127,9 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>
@@ -108,7 +138,11 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <!--是否调过执行-->
+                            <skipAssembly>${skipPkg}</skipAssembly>
+                            <!--最终包名-->
                             <finalName>${service.name}</finalName>
+                            <!--包名是否添加ID-->
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
                                 <descriptor>${project.basedir}/src/main/resources/assembly.xml</descriptor>
