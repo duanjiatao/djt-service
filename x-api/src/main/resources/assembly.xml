@@ -4,15 +4,16 @@
     <formats>
         <format>tar.gz</format>
     </formats>
-    <includeBaseDirectory>false</includeBaseDirectory>
+    <!--第一层是否是基础目录-->
+    <includeBaseDirectory>true</includeBaseDirectory>
 
     <dependencySets>
 
         <dependencySet>
-            <!-->是否添加自身jar包<-->
+            <!--是否添加自身jar包-->
             <useProjectArtifact>true</useProjectArtifact>
             <!--三方包输出路径-->
-            <outputDirectory>./${service.name}/lib</outputDirectory>
+            <outputDirectory>./lib</outputDirectory>
             <!--是否将三方包解压成class文件-->
             <unpack>false</unpack>
         </dependencySet>
@@ -22,8 +23,8 @@
     <fileSets>
 
         <fileSet>
-            <directory>${project.build.directory}/classes</directory>
-            <outputDirectory>./${service.name}/config</outputDirectory>
+            <directory>${project.build.outputDirectory}</directory>
+            <outputDirectory>./config</outputDirectory>
             <includes>
                 <include>log4j2.xml</include>
                 <include>*.properties</include>
@@ -31,8 +32,8 @@
         </fileSet>
 
         <fileSet>
-            <directory>${project.build.directory}/classes</directory>
-            <outputDirectory>./${service.name}/</outputDirectory>
+            <directory>${project.build.outputDirectory}</directory>
+            <outputDirectory>./</outputDirectory>
             <includes>
                 <include>*.sh</include>
             </includes>
