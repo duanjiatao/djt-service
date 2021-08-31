@@ -74,7 +74,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!--启动类-->
-                    <mainClass>com.djt.api.Application</mainClass>
                     <layout>JAR</layout>
                     <layers>
                         <enabled>false</enabled>
