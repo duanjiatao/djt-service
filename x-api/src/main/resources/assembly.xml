@@ -27,7 +27,7 @@
             <outputDirectory>./config</outputDirectory>
             <includes>
                 <include>log4j2.xml</include>
-                <include>*.properties</include>
+                <include>*.yaml</include>
             </includes>
         </fileSet>
 

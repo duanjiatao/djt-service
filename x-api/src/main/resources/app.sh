@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT=$0
-DEPLOY_DIR=$(pwd)
+DEPLOY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONF_DIR=$DEPLOY_DIR/config
 SERVICE=${service.name}
 JAR=${artifactId}-${version}.${packaging}
